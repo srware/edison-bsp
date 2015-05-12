@@ -1,0 +1,11 @@
+[Unit]
+Description=One Time Setup Check
+After=first-install.service
+
+[Service]
+ExecStart=/usr/bin/configure_edison --checkOneTimeSetup
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
