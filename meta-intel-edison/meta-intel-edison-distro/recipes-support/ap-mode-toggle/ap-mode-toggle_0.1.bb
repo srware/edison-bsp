@@ -17,6 +17,8 @@ SYSTEMD_SERVICE_${PN} = "ap-mode-toggle.service"
 
 inherit systemd
 
+SYSTEMD_AUTO_ENABLE = "disable"
+
 FILES_${PN} = "${systemd_unitdir}/system/*"
 FILES_${PN} += "${bindir}/*"
 
