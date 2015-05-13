@@ -1,7 +1,7 @@
 DESCRIPTION = "Firmware files for use with Linux kernel"
 SECTION = "kernel"
 
-SRC_URI = "git://github.com/01org/edison-firmware.git;branch=master;protocol=git;rev=8585a10b3527666b2d35b3dcacffede3ec00cb53" 
+SRC_URI = "git://github.com/01org/edison-firmware.git;branch=master;protocol=https;rev=8585a10b3527666b2d35b3dcacffede3ec00cb53" 
 
 S = "${WORKDIR}/git/broadcom_cws/wlan/firmware/"
 

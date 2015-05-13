@@ -126,11 +126,6 @@ IMAGE_INSTALL += "tzdata"
 # SWIG
 IMAGE_INSTALL += "swig"
 
-
-# Edison Arduino stuff
-IMAGE_INSTALL += "clloader"
-
-
 # Edison Middleware stuff
 IMAGE_INSTALL += "packagegroup-core-buildessential"
 IMAGE_INSTALL += "iotkit-opkg"

@@ -154,7 +154,7 @@ do_update_cache () {
     git remote update
   else
     # The repo does not exist. Clone it.
-    git clone --mirror git://git.yoctoproject.org/$1.git $1-mirror.git
+    git clone --mirror http://git.yoctoproject.org/git/$1.git $1-mirror.git
   fi
   cd $my_position
 
