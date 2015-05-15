@@ -99,14 +99,14 @@ sshd_init () {
 # Sets Device Name updating hostname, AP SSID and P2P SSID.
 #
 setup_device_name () {
-    name="LIGHTLAKE"
+    name="IOTRP"
     passphrase="password"
 
     # factory_serial is 16 bytes long
     if [ -f /factory/serial_number ] ;
     then
         factory_serial=$(head -n1 /factory/serial_number | tr '[:lower:]' '[:upper:]')
-        name="LIGHTLAKE-${factory_serial}"
+        name="IOTRP-${factory_serial}"
     fi
 
     # Set hostname

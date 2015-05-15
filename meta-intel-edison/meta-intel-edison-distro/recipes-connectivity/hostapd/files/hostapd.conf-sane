@@ -84,7 +84,7 @@ ctrl_interface_group=0
 # to get a unique SSID among mutiple Edison boards (see the content of this script)
 # See the header of this script if you want to disable this dynamic setting
 # and to set a manual and static SSID
-ssid=LIGHTLAKE-AP
+ssid=IOTRP-EDISON-AP
 
 # UTF-8 SSID: Whether the SSID is to be interpreted using UTF-8 encoding
 #utf8_ssid=1
