@@ -99,14 +99,14 @@ sshd_init () {
 # Sets Device Name updating hostname, AP SSID and P2P SSID.
 #
 setup_device_name () {
-    name="IOTRP"
+    name="IOTRP-EDISON"
     passphrase="password"
 
     # factory_serial is 16 bytes long
     if [ -f /factory/serial_number ] ;
     then
         factory_serial=$(head -n1 /factory/serial_number | tr '[:lower:]' '[:upper:]')
-        name="IOTRP-${factory_serial}"
+        ssid="IOTRP-EDISON-${factory_serial}"
     fi
 
     # Set hostname
@@ -114,13 +114,13 @@ setup_device_name () {
     hostname -F /etc/hostname
 
     # Substitute the SSID
-    sed -i -e 's/^ssid=.*/ssid='${name}'/g' /etc/hostapd/hostapd.conf
+    sed -i -e 's/^ssid=.*/ssid='${ssid}'/g' /etc/hostapd/hostapd.conf
 
     # Substitute the passphrase
     sed -i -e 's/^wpa_passphrase=.*/wpa_passphrase='${passphrase}'/g' /etc/hostapd/hostapd.conf
 
     # Substitute P2P SSID
-    sed -i -e 's/^p2p_ssid_postfix=.*/p2p_ssid_postfix='${name}'/g' /etc/wpa_supplicant/p2p_supplicant.conf
+    sed -i -e 's/^p2p_ssid_postfix=.*/p2p_ssid_postfix='${ssid}'/g' /etc/wpa_supplicant/p2p_supplicant.conf
 
     sync
 }
