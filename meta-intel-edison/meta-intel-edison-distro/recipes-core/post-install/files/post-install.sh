@@ -111,6 +111,7 @@ setup_device_name () {
 
     # Set hostname
     echo -e ${name} > /etc/hostname
+    hostname -F /etc/hostname
 
     # Substitute the SSID
     sed -i -e 's/^ssid=.*/ssid='${name}'/g' /etc/hostapd/hostapd.conf

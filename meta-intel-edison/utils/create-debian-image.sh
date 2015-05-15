@@ -194,8 +194,8 @@ $CHROOTCMD apt-get clean
 mv $ROOTDIR/etc/environment.sav $ROOTDIR/etc/environment
 mv $ROOTDIR/etc/resolv.conf.sav $ROOTDIR/etc/resolv.conf
 mv $ROOTDIR/etc/hosts.sav $ROOTDIR/etc/hosts.conf
-echo "127.0.0.1       localhost.localdomain           edison" >> $ROOTDIR/etc/hosts
-echo "edison" > $ROOTDIR/etc/hostname
+echo "127.0.0.1       localhost.localdomain           lightlake" >> $ROOTDIR/etc/hosts
+echo "lightlake" > $ROOTDIR/etc/hostname
 echo "rootfs               /                    auto       nodev,noatime,discard,barrier=1,data=ordered,noauto_da_alloc    1  1" > $ROOTDIR/etc/fstab
 echo "/dev/disk/by-partlabel/boot     /boot       auto    noauto,comment=systemd.automount,nosuid,nodev,noatime,discard     1   1" >> $ROOTDIR/etc/fstab
 
