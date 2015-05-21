@@ -1,0 +1,6 @@
+bitbake_download_dir/
+bitbake_sstate_cache/
+build/
+poky/
+u-boot/
+
