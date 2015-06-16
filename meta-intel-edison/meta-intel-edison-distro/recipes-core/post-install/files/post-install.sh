@@ -99,14 +99,31 @@ sshd_init () {
 # Sets Device Name updating hostname, AP SSID and P2P SSID.
 #
 setup_device_name () {
-    name="IOTRP-EDISON"
+    name="IOT-DEVICE"
     passphrase="password"
+    factory_serial="12345678"
+    manufacturer="Intel"
+    manufacturerUrl="http://www.intel.com/content/www/us/en/homepage.html"
+    model="Intel Edison"
+    modelUrl="https://www-ssl.intel.com/content/www/us/en/do-it-yourself/edison.html"
+    version="1.0.0"
 
-    # factory_serial is 16 bytes long
+    # Get Device Information
+    if [ -f /etc/device-info ] ;
+    then
+        name=$(grep -o 'Name.*' /etc/device-info | cut -f2 -d'=' | tr -s ' ' '_' | tr '[:lower:]' '[:upper:]')
+	manufacturer=$(grep -o 'Manufacturer.*' /etc/device-info | cut -f2 -d'=')
+        manufacturerUrl=$(grep -o 'ManufacturerUrl.*' /etc/device-info | cut -f2 -d'=')
+        model=$(grep -o 'Model.*' /etc/device-info | cut -f2 -d'=')
+        modelUrl=$(grep -o 'ModelUrl.*' /etc/device-info | cut -f2 -d'=')
+	version=$(grep -o 'Version.*' /etc/device-info | cut -f2 -d'=')
+    fi
+
+    # Get Factory Serial
     if [ -f /factory/serial_number ] ;
     then
         factory_serial=$(head -n1 /factory/serial_number | tr '[:lower:]' '[:upper:]')
-        ssid="IOTRP-EDISON-${factory_serial}"
+        name="${name}-${factory_serial}"
     fi
 
     # Set hostname
@@ -114,13 +131,22 @@ setup_device_name () {
     hostname -F /etc/hostname
 
     # Substitute the SSID
-    sed -i -e 's/^ssid=.*/ssid='${ssid}'/g' /etc/hostapd/hostapd.conf
+    sed -i -e 's/^ssid=.*/ssid='${name}'/g' /etc/hostapd/hostapd.conf
 
     # Substitute the passphrase
     sed -i -e 's/^wpa_passphrase=.*/wpa_passphrase='${passphrase}'/g' /etc/hostapd/hostapd.conf
 
     # Substitute P2P SSID
-    sed -i -e 's/^p2p_ssid_postfix=.*/p2p_ssid_postfix='${ssid}'/g' /etc/wpa_supplicant/p2p_supplicant.conf
+    sed -i -e 's/^p2p_ssid_postfix=.*/p2p_ssid_postfix='${name}'/g' /etc/wpa_supplicant/p2p_supplicant.conf
+
+    # Setup UPnP
+    sed -i 's/var name=\".*\";/var name=\"'${name}'\";/g' /usr/lib/upnp-service/upnp-service.js
+    sed -i 's/var manufacturer=\".*\";/var manufacturer=\"'${manufacturer}'\";/g' /usr/lib/upnp-service/upnp-service.js
+    sed -i 's/var manufacturerUrl=\".*\";/var manufacturerUrl=\"'${manufacturerUrl}'\";/g' /usr/lib/upnp-service/upnp-service.js
+    sed -i 's/var model=\".*\";/var model=\"'${model}'\";/g' /usr/lib/upnp-service/upnp-service.js
+    sed -i 's/var modelUrl=\".*\";/var modelUrl=\"'${modelUrl}'\";/g' /usr/lib/upnp-service/upnp-service.js
+    sed -i 's/var version=\".*\";/var version=\"'${version}'\";/g' /usr/lib/upnp-service/upnp-service.js
+    sed -i 's/var serial=\".*\";/var serial=\"'${factory_serial}'\";/g' /usr/lib/upnp-service/upnp-service.js
 
     sync
 }
@@ -164,17 +190,10 @@ then
     # not the case.
     fi_assert 0 "Formatting update partition Step 1"
 
-    # create a loop device on update disk
-    losetup -o 8192 /dev/loop0 /dev/disk/by-partlabel/update
+    # format update partition
+    mkfs.vfat /dev/disk/by-partlabel/update -n "Edison" -F 32
     fi_assert $? "Formatting update partition Step 2"
 
-    # format update partition
-    mkfs.vfat /dev/loop0 -n "Edison" -F 32
-    fi_assert $? "Formatting update partition Step 3"
-
-    # remove loop device on update disk
-    losetup -d /dev/loop0
-    fi_assert $? "Formatting update partition Step 4 final"
 else
     # just mount home partition after OTA update
     mount_home

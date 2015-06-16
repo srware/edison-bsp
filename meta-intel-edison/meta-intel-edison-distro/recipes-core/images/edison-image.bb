@@ -136,8 +136,8 @@ IMAGE_INSTALL += "iotkit-comm-js"
 IMAGE_INSTALL += "iotkit-comm-c-dev"
 IMAGE_INSTALL += "iotkit-agent"
 IMAGE_INSTALL += "iotkit-lib-c-dev"
-IMAGE_INSTALL += "xdk-daemon"
 IMAGE_INSTALL += "oobe"
+IMAGE_INSTALL += "upnp"
 
 # mosquitto and dependencies
 IMAGE_INSTALL += "mosquitto-dev"
@@ -154,12 +154,10 @@ IMAGE_INSTALL += "mraa-doc"
 # UPM
 IMAGE_INSTALL += "upm-dev"
 
-
-
 # INTEL MCU FW
 IMAGE_INSTALL += "mcu-fw-load"
 IMAGE_INSTALL += "mcu-fw-bin"
 
-# nfs
+# NFS
 IMAGE_INSTALL += "nfs-utils"
 
