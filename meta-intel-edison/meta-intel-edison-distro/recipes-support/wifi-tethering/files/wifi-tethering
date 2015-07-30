@@ -38,6 +38,10 @@ ap_start()
 	# manually. This is a dirty hack that will be removed when the bridging
 	# works ok. JRi 8 Dec 2014
 	brctl addif tether wlan0
+
+	# Visual indicator if Arduino breakout board is used
+        sleep 1
+	systemctl start blink-led
 }
 
 ap_stop()
@@ -49,6 +53,8 @@ ap_stop()
 	# reload the driver for sta/p2p mode
 	modprobe -r bcm4334x
 	modprobe bcm4334x
+	sleep 1
+	systemctl stop blink-led
 }
 
 check_status()
