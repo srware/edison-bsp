@@ -136,7 +136,6 @@ IMAGE_INSTALL += "iotkit-comm-c-dev"
 IMAGE_INSTALL += "iotkit-agent"
 IMAGE_INSTALL += "iotkit-lib-c-dev"
 IMAGE_INSTALL += "oobe"
-IMAGE_INSTALL += "upnp"
 
 # mosquitto and dependencies
 IMAGE_INSTALL += "mosquitto-dev"

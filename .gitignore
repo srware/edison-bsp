@@ -3,4 +3,5 @@ bitbake_sstate_cache/
 build/
 poky/
 u-boot/
-
+customer-layers/
+layers/
